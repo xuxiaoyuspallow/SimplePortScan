@@ -10,7 +10,7 @@ import json
 # config
 TIMEOUT = 1
 THREAD = 1
-COMMON_PORT = ['80','443','3306','23', '50058']
+COMMON_PORT = ['80','443','3306','23']
 ############
 
 
@@ -70,11 +70,11 @@ def ping(task, timeout=TIMEOUT):
         status = cs.connect_ex((address))
         if status == 0 :
             RESULT[ip].append(port)
-            print "%d is NORMAL" %port
+            print "%s is NORMAL" %port
         else:
             print '{0}:{1} is unavailable'.format(ip,port)
     except Exception as e:
-        print "error"
+        print e
     else:
         cs.close()
 
@@ -96,6 +96,7 @@ if __name__ == '__main__':
     threads = []
     for i in range(THREAD):
         t = Scan()
+        threads.append(t)
         t.start()
     for t in threads:
         t.join()
